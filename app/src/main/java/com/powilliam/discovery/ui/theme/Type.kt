@@ -1,28 +1,18 @@
 package com.powilliam.discovery.ui.theme
 
 import androidx.compose.material.Typography
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
+import com.powilliam.discovery.R
 
-// Set of Material typography styles to start with
+val light = Font(R.font.mulish_light, FontWeight.W300)
+val regular = Font(R.font.mulish_regular, FontWeight.W400)
+val medium = Font(R.font.mulish_medium, FontWeight.W500)
+val bold = Font(R.font.mulish_bold, FontWeight.W600)
+
+val Mulish = FontFamily(light, regular, medium, bold)
+
 val Typography = Typography(
-        body1 = TextStyle(
-                fontFamily = FontFamily.Default,
-                fontWeight = FontWeight.Normal,
-                fontSize = 16.sp
-        )
-        /* Other default text styles to override
-    button = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.W500,
-        fontSize = 14.sp
-    ),
-    caption = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
-    )
-    */
+        defaultFontFamily = Mulish
 )
