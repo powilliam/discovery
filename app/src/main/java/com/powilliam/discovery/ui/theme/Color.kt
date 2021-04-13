@@ -6,6 +6,8 @@ val White = Color(0xFFF2F2F7)
 
 val Primary = Color(0xFF007AFF)
 val OnPrimary = White
+val Surface = Color(0xFF262628)
+val OnSurface = White
 val Background = Color(0xFF1C1C1E)
 val OnBackground = White
 
