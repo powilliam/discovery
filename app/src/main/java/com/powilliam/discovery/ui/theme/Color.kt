@@ -2,7 +2,13 @@ package com.powilliam.discovery.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+val White = Color(0xFFF2F2F7)
+
+val Primary = Color(0xFF007AFF)
+val OnPrimary = White
+val Background = Color(0xFF1C1C1E)
+val OnBackground = White
+
+val PrimaryText = White
+val SecondaryText = Color(0xFFE5E5EA)
+val PlaceholderText = Color(0xFF8E8E93)
