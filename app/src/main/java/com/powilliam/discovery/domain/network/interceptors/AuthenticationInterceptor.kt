@@ -2,7 +2,6 @@ package com.powilliam.discovery.domain.network.interceptors
 
 import okhttp3.Interceptor
 import okhttp3.Response
-import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton

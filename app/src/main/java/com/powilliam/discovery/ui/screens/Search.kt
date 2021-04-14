@@ -5,13 +5,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.powilliam.discovery.domain.models.GithubUser
 import com.powilliam.discovery.ui.components.LazyDevelopersList
 import com.powilliam.discovery.ui.components.SearchTextField
+import com.powilliam.discovery.ui.viewmodels.SearchViewModel
 
 @ExperimentalFoundationApi
 @Composable
-fun SearchScreen() {
+fun SearchScreen(
+    searchViewModel: SearchViewModel
+) {
     val starredDevelopers by rememberSaveable { mutableStateOf(listOf(
         GithubUser(id = "1", name = "William Porto", bio = "Mobile developer at @naveteam", image = ""),
     )) }
@@ -20,6 +24,8 @@ fun SearchScreen() {
         GithubUser(id = "3", name = "Gui Magnabosco", bio = "Mobile developer at @naveteam", image = "")
     )) }
     var search by rememberSaveable { mutableStateOf("") }
+
+    searchViewModel.doSearchByLogin()
 
     Scaffold {
         Column {
