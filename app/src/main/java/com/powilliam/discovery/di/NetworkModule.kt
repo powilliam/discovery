@@ -12,9 +12,10 @@ import javax.inject.Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class AuthenticationInterceptorOkHttpClient
 
-@Module
+
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
+@Module
+class NetworkModule {
 
     @AuthenticationInterceptorOkHttpClient
     @Provides
