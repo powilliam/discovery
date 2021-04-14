@@ -17,6 +17,9 @@ import com.powilliam.discovery.ui.theme.SecondaryText
 
 @Composable
 fun Developer(
+    name: String,
+    bio: String,
+    image: String,
 ) {
     Card (
         backgroundColor = MaterialTheme.colors.background,
@@ -40,12 +43,12 @@ fun Developer(
                     modifier = Modifier.padding(start = 16.dp)
                 ) {
                     Text(
-                        text = "William Porto",
+                        text = name,
                         color = PrimaryText,
                         style = MaterialTheme.typography.body2
                     )
                     Text(
-                        text = "Mobile developer at @naveteam",
+                        text = bio,
                         color = SecondaryText,
                         style = MaterialTheme.typography.caption
                     )
