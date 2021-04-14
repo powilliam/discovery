@@ -50,7 +50,8 @@ fun Developer(
                     Text(
                         text = bio,
                         color = SecondaryText,
-                        style = MaterialTheme.typography.caption
+                        style = MaterialTheme.typography.caption,
+                        modifier = Modifier.padding(top = 2.dp)
                     )
                 }
             }
