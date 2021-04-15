@@ -17,6 +17,8 @@ class SearchViewModel @Inject constructor(
    private val apollo: Apollo
 ) : ViewModel() {
 
+    private var _loading: MutableLiveData<Boolean> = MutableLiveData(false)
+    val loading: LiveData<Boolean> = _loading
     private var _login: MutableLiveData<String> = MutableLiveData("")
     val login: LiveData<String> = _login
     private var _developers: MutableLiveData<Array<GithubUser>> =
@@ -40,6 +42,8 @@ class SearchViewModel @Inject constructor(
 
     fun doSearchByLogin() = viewModelScope.launch {
         _login.value?.let { login ->
+            _loading.value = true
+
             val query = GetUserByLoginQuery(login)
             val response = apollo.getClient()
                 .query(query)
@@ -59,6 +63,8 @@ class SearchViewModel @Inject constructor(
                     )
                 }
             }
+
+            _loading.value = false
         }
     }
 
