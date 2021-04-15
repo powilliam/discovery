@@ -1,5 +1,6 @@
 package com.powilliam.discovery.domain.network.interceptors
 
+import com.powilliam.discovery.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
@@ -11,7 +12,7 @@ class AuthenticationInterceptor @Inject constructor() : Interceptor {
         val request = chain
             .request()
             .newBuilder()
-            .addHeader("Authorization", "bearer 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")
+            .addHeader("Authorization", "bearer ${BuildConfig.GITHUB_API_TOKEN}")
             .build()
 
         return chain.proceed(request)
