@@ -16,10 +16,6 @@ import com.powilliam.discovery.ui.viewmodels.SearchViewModel
 fun SearchScreen(
     searchViewModel: SearchViewModel
 ) {
-    val starredDevelopers by rememberSaveable { mutableStateOf(arrayOf(
-        GithubUser(id = "1", name = "William Porto", bio = "Mobile developer at @naveteam", image = ""),
-    )) }
-
     val search by searchViewModel.login.observeAsState()
     val developers by searchViewModel.developers.observeAsState()
 
@@ -30,9 +26,6 @@ fun SearchScreen(
                 onValueChange = { searchViewModel.onSearchChange(it) },
                 onClearValue = { searchViewModel.onClearSearchValue() },
                 onSearch = { searchViewModel.doSearchByLogin() }
-            )
-            LazyDevelopersList(
-                data = mapOf(Pair("STARRED DEVELOPERS", starredDevelopers))
             )
             LazyDevelopersList(
                 data = mapOf(Pair("MATCHES FOUND", developers!!))

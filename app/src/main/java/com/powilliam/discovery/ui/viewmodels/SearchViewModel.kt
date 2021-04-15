@@ -25,7 +25,6 @@ class SearchViewModel @Inject constructor(
 
     fun onSearchChange(value: String) = viewModelScope.launch {
         _login.value = value
-        doSearchByLogin()
     }
 
     fun onClearSearchValue() = viewModelScope.launch {
