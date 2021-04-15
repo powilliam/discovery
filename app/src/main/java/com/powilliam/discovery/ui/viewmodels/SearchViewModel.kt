@@ -44,20 +44,25 @@ class SearchViewModel @Inject constructor(
             val response = apollo.getClient()
                 .query(query)
                 .await()
+            val user = response.data?.user
 
-            if (!response.hasErrors()) {
-                response.data?.user?.let {user ->
+            user?.let {
+                if (!response.hasErrors() && !developerAlreadyExists(it.id)) {
                     _developers.value = arrayOf(
                         GithubUser(
-                            id = user.id,
-                            name = user.name ?: "",
-                            bio = user.bio ?: "",
-                            image = (user.avatarUrl ?: "") as String,
+                            id = it.id,
+                            name = it.name ?: "",
+                            bio = it.bio ?: "",
+                            image = (it.avatarUrl ?: "") as String,
                         ),
                         *_developers.value!!
                     )
                 }
             }
         }
+    }
+
+    private fun developerAlreadyExists(id: String): Boolean {
+        return _developers.value?.find { developer -> developer.id == id } != null
     }
 }
