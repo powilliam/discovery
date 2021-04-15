@@ -15,7 +15,7 @@ import com.powilliam.discovery.ui.theme.SecondaryText
 @ExperimentalFoundationApi
 @Composable
 fun LazyDevelopersList(
-    data: Map<String, List<GithubUser>>
+    data: Map<String, Array<GithubUser>>
 ) {
     LazyColumn {
         data.forEach { (label, developers) ->

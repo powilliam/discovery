@@ -1,13 +1,10 @@
 package com.powilliam.discovery.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.apollographql.apollo.ApolloCall
-import com.apollographql.apollo.api.Response
-import com.apollographql.apollo.exception.ApolloException
+import com.apollographql.apollo.coroutines.await
 import com.powilliam.discovery.GetUserByLoginQuery
 import com.powilliam.discovery.domain.models.GithubUser
 import com.powilliam.discovery.domain.network.clients.Apollo
@@ -22,12 +19,13 @@ class SearchViewModel @Inject constructor(
 
     private var _login: MutableLiveData<String> = MutableLiveData("")
     val login: LiveData<String> = _login
-    private var _developers: MutableLiveData<MutableList<GithubUser>> =
-        MutableLiveData(mutableListOf())
-    val developers: LiveData<MutableList<GithubUser>> = _developers
+    private var _developers: MutableLiveData<Array<GithubUser>> =
+        MutableLiveData(arrayOf())
+    val developers: LiveData<Array<GithubUser>> = _developers
 
     fun onSearchChange(value: String) = viewModelScope.launch {
         _login.value = value
+        doSearchByLogin()
     }
 
     fun onClearSearchValue() = viewModelScope.launch {
@@ -37,29 +35,23 @@ class SearchViewModel @Inject constructor(
     fun doSearchByLogin() = viewModelScope.launch {
         _login.value?.let { login ->
             val query = GetUserByLoginQuery(login)
-            apollo.getClient()
+            val response = apollo.getClient()
                 .query(query)
-                .enqueue(object : ApolloCall.Callback<GetUserByLoginQuery.Data>() {
-                    override fun onResponse(response: Response<GetUserByLoginQuery.Data>) {
-                        Log.d("OnResponse", response.toString())
-                        if (!response.hasErrors()) {
-                            response.data?.user?.let {user ->
-                                _developers.value?.add(
-                                    GithubUser(
-                                        id = user.id,
-                                        name = user.name ?: "",
-                                        bio = user.bio ?: "",
-                                        image = (user.avatarUrl ?: "") as String,
-                                    )
-                                )
-                            }
-                        }
-                    }
+                .await()
 
-                    override fun onFailure(e: ApolloException) {
-                        Log.e("DoSearchByLogin", e.toString())
-                    }
-                })
+            if (!response.hasErrors()) {
+                response.data?.user?.let {user ->
+                    _developers.value = arrayOf(
+                        GithubUser(
+                            id = user.id,
+                            name = user.name ?: "",
+                            bio = user.bio ?: "",
+                            image = (user.avatarUrl ?: "") as String,
+                        ),
+                        *_developers.value!!
+                    )
+                }
+            }
         }
     }
 }
