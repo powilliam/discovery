@@ -23,12 +23,13 @@ fun SearchScreen(
         Column {
             SearchTextField(
                 value = search!!,
-                onValueChange = { searchViewModel.onSearchChange(it) },
+                onValueChange = { value -> searchViewModel.onSearchChange(value) },
                 onClearValue = { searchViewModel.onClearSearchValue() },
                 onSearch = { searchViewModel.doSearchByLogin() }
             )
             LazyDevelopersList(
-                data = mapOf(Pair("MATCHES FOUND", developers!!))
+                data = mapOf(Pair("MATCHES FOUND", developers!!)),
+                onDeleteOne = { id -> searchViewModel.onDeleteDeveloper(id) }
             )
         }
     }

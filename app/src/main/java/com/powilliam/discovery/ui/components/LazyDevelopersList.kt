@@ -15,7 +15,8 @@ import com.powilliam.discovery.ui.theme.SecondaryText
 @ExperimentalFoundationApi
 @Composable
 fun LazyDevelopersList(
-    data: Map<String, Array<GithubUser>>
+    data: Map<String, Array<GithubUser>>,
+    onDeleteOne: (id: String) -> Unit = {}
 ) {
     LazyColumn {
         data.forEach { (label, developers) ->
@@ -33,9 +34,11 @@ fun LazyDevelopersList(
                 key = { developer -> developer.id }
             ) { developer ->
                 Developer(
+                    id = developer.id,
                     name = developer.name,
                     bio = developer.bio,
-                    image = developer.image
+                    image = developer.image,
+                    onDelete = { onDeleteOne(developer.id) }
                 )
             }
         }

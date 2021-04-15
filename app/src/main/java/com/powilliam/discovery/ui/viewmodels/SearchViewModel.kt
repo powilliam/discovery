@@ -31,6 +31,13 @@ class SearchViewModel @Inject constructor(
         _login.value = ""
     }
 
+    fun onDeleteDeveloper(id: String) = viewModelScope.launch {
+        _developers.value?.let { developers ->
+            _developers.value = developers.filter { developer -> developer.id != id }
+                .toTypedArray()
+        }
+    }
+
     fun doSearchByLogin() = viewModelScope.launch {
         _login.value?.let { login ->
             val query = GetUserByLoginQuery(login)

@@ -1,5 +1,6 @@
 package com.powilliam.discovery.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -19,9 +20,11 @@ import com.powilliam.discovery.ui.theme.SecondaryText
 
 @Composable
 fun Developer(
+    id: String,
     name: String,
     bio: String,
     image: String,
+    onDelete: (id: String) -> Unit = {  }
 ) {
     Card (
         backgroundColor = MaterialTheme.colors.background,
@@ -88,8 +91,12 @@ fun Developer(
                 }
             }
 
-            Icon(Icons.Outlined.Close,
+            Icon(
+                Icons.Outlined.Close,
                 contentDescription = "Delete",
+                modifier = Modifier.clickable {
+                    onDelete(id)
+                }
             )
         }
     }
