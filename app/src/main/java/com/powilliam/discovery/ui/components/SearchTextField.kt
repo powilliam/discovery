@@ -2,7 +2,9 @@ package com.powilliam.discovery.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActionScope
 import androidx.compose.foundation.text.KeyboardActions
@@ -16,6 +18,8 @@ import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.powilliam.discovery.ui.theme.PlaceholderText
@@ -31,7 +35,6 @@ fun SearchTextField(
         .fillMaxWidth()
         .padding(16.dp)
 ) {
-
     Column  {
         BasicTextField(
             value = value,
@@ -43,12 +46,13 @@ fun SearchTextField(
             ),
             keyboardActions = KeyboardActions(
                 onSearch = onSearch
-            )
-        ) {
-            val isEmpty = value.isEmpty()
-            val text = if (isEmpty) "Search" else value
-            val color = if (isEmpty) PlaceholderText else PrimaryText
-
+            ),
+            textStyle = MaterialTheme.typography.body1.copy(color = PrimaryText),
+            cursorBrush = Brush.linearGradient(colors = mutableListOf(
+                PrimaryText,
+                PrimaryText
+            ))
+        ) { TextField ->
             Row (
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.Top
@@ -56,19 +60,27 @@ fun SearchTextField(
                 Row {
                     Icon(Icons.Outlined.Search, contentDescription = "Search")
                     Spacer(modifier = Modifier.size(16.dp))
-                    Text(
-                        text = text,
-                        color = color,
-                        style = MaterialTheme.typography.body1,
-                        modifier = Modifier.width(260.dp)
-                    )
+
+                    if (value.isNotEmpty()) {
+                        Box(modifier = Modifier.width(260.dp)) {
+                            TextField()
+                        }
+                    } else {
+                        Text(
+                            text = "Search",
+                            style = MaterialTheme.typography.body1,
+                            color = PlaceholderText
+                        )
+                    }
                 }
 
-                if (!isEmpty) {
+                if (value.isNotEmpty()) {
                     Icon(
                         Icons.Outlined.Close,
                         contentDescription = "Clear search text",
-                        modifier = Modifier.clickable { onClearValue() }
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(percent = 50))
+                            .clickable { onClearValue() }
                     )
                 }
             }

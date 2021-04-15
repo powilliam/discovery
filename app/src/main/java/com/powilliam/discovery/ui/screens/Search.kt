@@ -6,11 +6,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.livedata.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.powilliam.discovery.domain.models.GithubUser
 import com.powilliam.discovery.ui.components.LazyDevelopersList
 import com.powilliam.discovery.ui.components.SearchTextField
 import com.powilliam.discovery.ui.viewmodels.SearchViewModel
