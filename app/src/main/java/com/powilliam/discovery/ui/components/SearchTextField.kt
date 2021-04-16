@@ -2,7 +2,6 @@ package com.powilliam.discovery.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -11,7 +10,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Search
@@ -22,7 +20,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import com.powilliam.discovery.ui.theme.PlaceholderText
 import com.powilliam.discovery.ui.theme.PrimaryText
 
 @Composable
@@ -48,10 +45,12 @@ fun SearchTextField(
                 onSearch = onSearch
             ),
             textStyle = MaterialTheme.typography.body1.copy(color = PrimaryText),
-            cursorBrush = Brush.linearGradient(colors = mutableListOf(
-                PrimaryText,
-                PrimaryText
-            ))
+            cursorBrush = Brush.linearGradient(
+                colors = mutableListOf(
+                  PrimaryText,
+                  PrimaryText
+                 )
+            )
         ) { TextField ->
             Row (
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -61,16 +60,8 @@ fun SearchTextField(
                     Icon(Icons.Outlined.Search, contentDescription = "Search")
                     Spacer(modifier = Modifier.size(16.dp))
 
-                    if (value.isNotEmpty()) {
-                        Box(modifier = Modifier.width(260.dp)) {
-                            TextField()
-                        }
-                    } else {
-                        Text(
-                            text = "Search",
-                            style = MaterialTheme.typography.body1,
-                            color = PlaceholderText
-                        )
+                    Box(modifier = Modifier.width(260.dp)) {
+                        TextField()
                     }
                 }
 
