@@ -42,6 +42,7 @@ class SearchViewModel @Inject constructor(
 
     fun doSearchByLogin() = viewModelScope.launch {
         _login.value?.let { login ->
+            _login.value = ""
             _loading.value = true
 
             val query = GetUserByLoginQuery(login)
@@ -55,9 +56,9 @@ class SearchViewModel @Inject constructor(
                     _developers.value = arrayOf(
                         GithubUser(
                             id = it.id,
-                            name = it.name ?: "",
-                            bio = it.bio ?: "",
-                            image = (it.avatarUrl ?: "") as String,
+                            name = it.name,
+                            bio = it.bio,
+                            image = it.avatarUrl as String,
                         ),
                         *_developers.value!!
                     )

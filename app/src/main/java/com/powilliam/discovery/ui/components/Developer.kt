@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.CoilImage
 import com.google.accompanist.imageloading.ImageLoadState
@@ -21,8 +22,8 @@ import com.powilliam.discovery.ui.theme.SecondaryText
 @Composable
 fun Developer(
     id: String,
-    name: String,
-    bio: String,
+    name: String?,
+    bio: String?,
     image: String,
     onDelete: (id: String) -> Unit = {  }
 ) {
@@ -48,7 +49,7 @@ fun Developer(
                        when (imageState) {
                            is ImageLoadState.Loading -> {
                                CircularProgressIndicator(
-                                   color = MaterialTheme.colors.primary,
+                                   color = MaterialTheme.colors.surface,
                                    strokeWidth = 1.dp
                                )
                            }
@@ -57,7 +58,10 @@ fun Developer(
                                    result = imageState,
                                    contentDescription = "$name profile image",
                                    modifier = Modifier
-                                       .fillMaxSize()
+                                       .fillMaxSize(),
+                                   fadeInEnabled = true,
+                                   fadeInDurationMs = 400,
+                                   contentScale = ContentScale.Fit
                                )
                            }
                            else -> {
@@ -72,31 +76,41 @@ fun Developer(
                 }
 
                 Column (
-                    modifier = Modifier.padding(start = 16.dp)
+                    modifier = Modifier
+                        .padding(start = 16.dp)
                 ) {
-                    Text(
-                        text = name,
-                        color = PrimaryText,
-                        style = MaterialTheme.typography.body2,
-                        modifier = Modifier.width(260.dp)
-                    )
-                    Text(
-                        text = bio,
-                        color = SecondaryText,
-                        style = MaterialTheme.typography.caption,
-                        modifier = Modifier
-                            .padding(top = 2.dp)
-                            .width(260.dp)
-                    )
+                    name?.let {
+                        if (it.isNotEmpty()) {
+                            Text(
+                                text = it,
+                                color = PrimaryText,
+                                style = MaterialTheme.typography.body1,
+                                modifier = Modifier.width(260.dp)
+                            )
+                        }
+                    }
+
+                    bio?.let {
+                        if (it.isNotEmpty()) {
+                            Text(
+                                text = it,
+                                color = SecondaryText,
+                                style = MaterialTheme.typography.body2,
+                                modifier = Modifier
+                                    .padding(top = 2.dp)
+                                    .width(260.dp)
+                            )
+                        }
+                    }
                 }
             }
 
             Icon(
                 Icons.Outlined.Close,
                 contentDescription = "Delete",
-                modifier = Modifier.clickable {
-                    onDelete(id)
-                }
+                modifier = Modifier
+                    .clip(RoundedCornerShape(percent = 50))
+                    .clickable { onDelete(id) }
             )
         }
     }
